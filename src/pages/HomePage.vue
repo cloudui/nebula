@@ -63,13 +63,14 @@
             <q-item-label class="text-subtitle1">
               <strong>Eric Chen</strong>
               <span class="text-grey-8 q-pl-sm">
-                @below_ocean
-                &bull; {{ relativeDate(tweet.date) }}
+                @{{ tweet.user.username }}
+                &bull; 5 min ago
+                <!-- {{ relativeDate(tweet.date) }} -->
               </span>
               
             </q-item-label>
 
-            <q-item-label class="text-body1 tweet-content">{{ tweet.content }}
+            <q-item-label class="text-body1 tweet-content">{{ tweet.text }}
             </q-item-label>
             <div class="row justify-between q-mt-sm tweet-icons">
               <q-btn
@@ -123,39 +124,46 @@
 <script>
 import { defineComponent } from 'vue'
 import { formatDistance } from 'date-fns'
+import axios from 'axios'
 
 export default defineComponent({
   name: 'HomePage',
   data() {
     return {
       newTweet: '',
-      tweets: [
-        {
-          content: '1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate consequatur cum dicta expedita, sequi alias quos veniam natus! Sed quaerat eveniet provident est velit cumque culpa mollitia in! Quam, voluptatibus.',
-          date: 1664558903123
-        },
-        {
-          content: '2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate consequatur cum dicta expedita, sequi alias quos veniam natus! Sed quaerat eveniet provident est velit cumque culpa mollitia in! Quam, voluptatibus.',
-          date: 1664558903124
-        }
-      ]
+      tweets: []
     }
   },
   methods: {
     addNewTweet() {
       let newTweet = {
-        content: this.newTweet, 
-        date: Date.now()
+        id: 3,
+        text: this.newTweet, 
+        user: {
+          username: "below_ocean"
+        }
       }
 
       this.tweets.unshift(newTweet)
+
+      axios.post('http://localhost:5000/api/tweets/create', {
+        text: this.newTweet, 
+        uid: 1
+      })
+
       this.newTweet = ''
+
     },
     deleteTweet(tweet) {
-      let dateToDelete = tweet.date;
-      let index = this.tweets.findIndex(tweet => tweet.date === dateToDelete);
+      let deleteid = tweet.id;
+      let index = this.tweets.findIndex(tweet => tweet.id === deleteid);
       console.log(index);
       this.tweets.splice(index, 1);
+
+      axios.delete('http://localhost:5000/api/tweets/delete', { data:
+        {id: deleteid}
+      })
+      
     }
   },
   computed: {
@@ -164,8 +172,12 @@ export default defineComponent({
         return formatDistance(value, new Date());
       }
     }
+  },
+  mounted() {
+    axios.get('http://localhost:5000/api/tweets').then(response => {
+      this.tweets = response.data
+  })
   }
-
 })
 </script>
 

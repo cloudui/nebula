@@ -20,7 +20,7 @@
         <!-- <q-btn dense flat round icon="menu" @click="toggleRightDrawer" /> -->
       </q-toolbar>
     </q-header>
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" width=390 bordered>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="390" bordered>
       <div>
         <!-- class="absolute-top-right q-mr-xl q-pr-xl" -->
       <q-icon 
