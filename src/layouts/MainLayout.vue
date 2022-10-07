@@ -21,7 +21,7 @@
       </q-toolbar>
     </q-header>
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="390" bordered>
-      <div>
+      <div class="absolute-top-right left-drawer">
         <!-- class="absolute-top-right q-mr-xl q-pr-xl" -->
       <q-icon 
         class="q-pa-sm"
@@ -29,7 +29,7 @@
         size="lg"
         color="primary"
       />
-      <q-list>
+      <q-list class="left-nav">
 
         <!-- List -->
         <q-item to="/" 
@@ -61,7 +61,13 @@
 
     </q-drawer>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+    <q-drawer
+
+      show-if-above
+      v-model="rightDrawerOpen"
+      side="right"
+      bordered
+    >
       <!-- search model -->
       <q-input 
         class="q-ma-md"
@@ -151,4 +157,10 @@ export default {
   bottom: 0
   left: 50%
   transform: translateX(-50%)
+.left-drawer
+  padding-right: 115px
+.left-nav
+  position: relative
+  left: -9px
+  padding-top: 5px
 </style>
