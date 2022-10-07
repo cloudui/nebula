@@ -64,8 +64,8 @@
               <strong>Eric Chen</strong>
               <span class="text-grey-8 q-pl-sm">
                 @{{ tweet.user.username }}
-                &bull; 5 min ago
-                <!-- {{ relativeDate(tweet.date) }} -->
+                &bull; 
+                {{ relativeDate(tweet.created_at) }}
               </span>
               
             </q-item-label>
@@ -104,10 +104,6 @@
                 round
               />
             </div>
-
-          <!-- </q-item-section>
-            {{ relativeDate(tweet.date) }}
-          <q-item-section side top> -->
           
           </q-item-section>
         </q-item>
