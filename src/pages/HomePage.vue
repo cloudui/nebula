@@ -51,7 +51,7 @@
         <q-item
           class="q-py-md"
           v-for="tweet in tweets"
-          :key="tweet.date"
+          :key="tweet.created_at"
         >
           <q-item-section avatar top>
             <q-avatar size="xl">
@@ -133,8 +133,9 @@ export default defineComponent({
   methods: {
     addNewTweet() {
       let newTweet = {
-        id: 3,
+        id: 3, 
         text: this.newTweet, 
+        created_at: Date.now(),
         user: {
           username: "below_ocean"
         }
@@ -153,7 +154,6 @@ export default defineComponent({
     deleteTweet(tweet) {
       let deleteid = tweet.id;
       let index = this.tweets.findIndex(tweet => tweet.id === deleteid);
-      console.log(index);
       this.tweets.splice(index, 1);
 
       axios.delete('http://localhost:5000/api/tweets/delete', { data:
